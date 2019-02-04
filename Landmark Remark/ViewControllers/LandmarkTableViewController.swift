@@ -38,6 +38,8 @@ class LandmarkTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.addGestureHideKeyboard()
+        
         self.tableView.estimatedRowHeight = 70
         self.tableView.rowHeight = UITableView.automaticDimension
         

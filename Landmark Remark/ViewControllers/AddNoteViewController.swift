@@ -29,6 +29,7 @@ class AddNoteViewController: UIViewController {
         
         self.setupKeyboard(self.txtNotes)
         self.addGestureHideKeyboard()
+        self.addKeyboardNotification(selector: #selector(keyboardWillShow))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,18 +149,11 @@ extension AddNoteViewController: UITextViewDelegate {
         textView.textColor = UIColor.lightGray
     }
     
-    func addGestureHideKeyboard()
-    {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(AddNoteViewController.dismissKeyboard))
-        
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard()
-    {
-        view.endEditing(true)
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            txtNotes.contentInset.bottom = keyboardHeight
+        }
     }
 }
