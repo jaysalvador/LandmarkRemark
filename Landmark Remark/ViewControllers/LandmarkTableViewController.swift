@@ -47,15 +47,22 @@ class LandmarkTableViewController: UITableViewController {
         self.locationManager = CLLocationManager()
         self.locationManager?.requestAlwaysAuthorization()
         self.locationManager?.requestWhenInUseAuthorization()
+
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: #selector(loadNotes), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        self.loadNotes()
+    }
+    
+    @objc func loadNotes () {
         // Load Notes
         NoteHelper.getNotes { [weak self] (noteArray) in
             if let strongSelf = self, let noteArray = noteArray {
                 strongSelf.noteArray = noteArray
+                strongSelf.refreshControl?.endRefreshing()
             }
         }
     }
