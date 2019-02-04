@@ -34,7 +34,7 @@ class Note: SerializableProtocol {
     }
     
     convenience init(_ dictionary: [String : Any?]){
-        self.init(user: dictionary["user"] as! User,
+        self.init(user: User.init(dictionary["user"] as! [String : Any?]),
                   notes: dictionary["notes"] as! String,
                   latitude: dictionary["latitude"] as! Double,
                   longitude: dictionary["longitude"] as! Double,
@@ -61,4 +61,5 @@ extension Note {
     static func stringToDate(dateString: String) -> Date? {
         return Note.dateFormatter().date(from: dateString)
     }
+    
 }

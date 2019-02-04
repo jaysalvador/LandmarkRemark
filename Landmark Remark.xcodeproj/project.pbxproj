@@ -22,6 +22,7 @@
 		B501905B22080EF800BECFA7 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501905A22080EF800BECFA7 /* AddNoteViewController.swift */; };
 		B501905D2208204500BECFA7 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501905C2208204500BECFA7 /* Note.swift */; };
 		B501905F2208277E00BECFA7 /* NoteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501905E2208277E00BECFA7 /* NoteHelper.swift */; };
+		B50190642208372C00BECFA7 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50190632208372C00BECFA7 /* NoteTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		B501905A22080EF800BECFA7 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
 		B501905C2208204500BECFA7 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		B501905E2208277E00BECFA7 /* NoteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHelper.swift; sourceTree = "<group>"; };
+		B50190632208372C00BECFA7 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,8 +98,9 @@
 		B50190322207B9F500BECFA7 /* Landmark Remark */ = {
 			isa = PBXGroup;
 			children = (
-				B501904A2207CFC000BECFA7 /* ViewControllers */,
 				B50190492207C17200BECFA7 /* Storyboard */,
+				B501904A2207CFC000BECFA7 /* ViewControllers */,
+				B5019060220836FD00BECFA7 /* Cells */,
 				B50190472207C0FE00BECFA7 /* Models */,
 				B501904D2207D18D00BECFA7 /* Common */,
 				B50190482207C10E00BECFA7 /* General */,
@@ -153,6 +156,14 @@
 				B501905E2208277E00BECFA7 /* NoteHelper.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		B5019060220836FD00BECFA7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B50190632208372C00BECFA7 /* NoteTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +309,7 @@
 				B50190342207B9F500BECFA7 /* AppDelegate.swift in Sources */,
 				B501904C2207CFE100BECFA7 /* LoginTableViewController.swift in Sources */,
 				B50190572207ED0F00BECFA7 /* UserHelper.swift in Sources */,
+				B50190642208372C00BECFA7 /* NoteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

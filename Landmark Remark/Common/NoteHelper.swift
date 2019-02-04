@@ -11,12 +11,14 @@ import Firebase
 
 class NoteHelper {
     
+    private static let keyNotes = "notes"
+    
     static func saveNote(note: Note, completion: @escaping (_ note: Note?) -> Void){
         
         var ref: DocumentReference? = nil
         let db = Firestore.firestore()
         
-        ref = db.collection("notes").addDocument(data: [
+        ref = db.collection(keyNotes).addDocument(data: [
                 "notes" : note.notes,
                 "coordinates" : GeoPoint.init(latitude: note.latitude, longitude: note.longitude),
                 "latitude" : note.latitude,
@@ -33,5 +35,31 @@ class NoteHelper {
                 completion(note)
             }
         }
+    }
+    
+    static func getNotes(completion: @escaping ((_ notes: [Note]?) -> Void)) {
+        let db = Firestore.firestore()
+        
+        db.collection(keyNotes).getDocuments(completion: {
+            (snapshot, error) in
+            
+            if let error = error {
+                print("Error getting document: \(error)")
+                completion(nil)
+            }
+            else{
+                var noteArray:[Note] = []
+                
+                for document in snapshot!.documents {
+                    var noteDic = document.data()
+                    noteDic["noteid"] = document.documentID
+                    
+                    let note = Note.init(noteDic)
+                    noteArray.append(note)
+                }
+                
+                completion(noteArray)
+            }
+        })
     }
 }
