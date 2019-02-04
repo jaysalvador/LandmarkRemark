@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "closure #1 in static UserHelper.login(_:completion:):UserHelper.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "querySnapshot!.documents[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static UserHelper.loginUser.getter:UserHelper.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UserDefaults.standard.keys">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
