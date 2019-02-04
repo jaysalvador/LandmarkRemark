@@ -20,6 +20,7 @@
 		B50190572207ED0F00BECFA7 /* UserHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50190562207ED0F00BECFA7 /* UserHelper.swift */; };
 		B5019059220800C200BECFA7 /* LandmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5019058220800C200BECFA7 /* LandmarkTableViewController.swift */; };
 		B501905B22080EF800BECFA7 /* AddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501905A22080EF800BECFA7 /* AddNoteViewController.swift */; };
+		B501905D2208204500BECFA7 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501905C2208204500BECFA7 /* Note.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		B50190562207ED0F00BECFA7 /* UserHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHelper.swift; sourceTree = "<group>"; };
 		B5019058220800C200BECFA7 /* LandmarkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkTableViewController.swift; sourceTree = "<group>"; };
 		B501905A22080EF800BECFA7 /* AddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewController.swift; sourceTree = "<group>"; };
+		B501905C2208204500BECFA7 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				B501904E2207D2F100BECFA7 /* User.swift */,
+				B501905C2208204500BECFA7 /* Note.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				B50190362207B9F500BECFA7 /* ViewController.swift in Sources */,
 				B5019059220800C200BECFA7 /* LandmarkTableViewController.swift in Sources */,
 				B501905B22080EF800BECFA7 /* AddNoteViewController.swift in Sources */,
+				B501905D2208204500BECFA7 /* Note.swift in Sources */,
 				B50190342207B9F500BECFA7 /* AppDelegate.swift in Sources */,
 				B501904C2207CFE100BECFA7 /* LoginTableViewController.swift in Sources */,
 				B50190572207ED0F00BECFA7 /* UserHelper.swift in Sources */,
