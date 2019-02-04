@@ -7,10 +7,18 @@
 //
 
 import UIKit
+import MapKit
 
 class LandmarkTableViewController: UITableViewController {
     
+    @IBOutlet var mapTableViewHeader: MapTableViewHeader!
     @IBOutlet weak var searchBar: UISearchBar!
+    
+    private weak var mapView: MKMapView? {
+        didSet {
+            mapView?.showsUserLocation = true
+        }
+    }
     
     private var noteArray: [Note] = [] {
         didSet{
@@ -63,18 +71,6 @@ class LandmarkTableViewController: UITableViewController {
     
 }
 
-extension LandmarkTableViewController: UISearchBarDelegate {
-    
-    // MARK: - Searchbar
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterNotes()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-}
-
 extension LandmarkTableViewController {
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,6 +94,20 @@ extension LandmarkTableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        self.mapView = mapTableViewHeader.mapView
+        self.mapView?.delegate = self
+        
+        return mapTableViewHeader
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 200.0
+    }
+    
+    
     // MARK: - Actions
     
     private func filterNotes () {
@@ -111,10 +121,43 @@ extension LandmarkTableViewController {
                     lowercaseSearchText.contains(username) ||
                     message.contains(lowercaseSearchText) ||
                     username.contains(lowercaseSearchText)
-            }
+                }.sorted { $0.date > $1.date }
         }
         else {
-            self.filteredNoteArray = noteArray
+            self.filteredNoteArray = noteArray.sorted { $0.date > $1.date }
         }
+    }
+}
+
+extension LandmarkTableViewController: UISearchBarDelegate {
+    
+    // MARK: - Searchbar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterNotes()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+}
+
+// MARK: - MKMapViewDelegate
+extension LandmarkTableViewController: MKMapViewDelegate {
+    
+    public func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        centerMap(on: userLocation.coordinate)
+    }
+    
+    
+    /**
+     Centers the mapview on the given coordinates with a specific radius
+     - Parameter coordinate: coordinates to use to center the map.
+     - Parameter radius: maximum radius.
+     */
+    
+    private func centerMap(on coordinate: CLLocationCoordinate2D, radius: CLLocationDistance = 200) {
+        let coordinateRegion = MKCoordinateRegion.init(center: coordinate, latitudinalMeters: radius, longitudinalMeters: radius)
+        
+        self.mapView?.setRegion(coordinateRegion, animated: true)
     }
 }

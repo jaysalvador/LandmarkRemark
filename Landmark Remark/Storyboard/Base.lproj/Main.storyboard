@@ -193,10 +193,31 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="mapTableViewHeader" destination="SRb-qQ-Jzb" id="pKY-i8-207"/>
                         <outlet property="searchBar" destination="uWm-qQ-bbA" id="bfM-iI-2Rc"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EI2-IF-rPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="SRb-qQ-Jzb" customClass="MapTableViewHeader" customModule="Landmark_Remark" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cmz-VG-FzX">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                        </mapView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="tzg-bZ-Rb0" firstAttribute="trailing" secondItem="cmz-VG-FzX" secondAttribute="trailing" id="Dmm-QQ-6Cx"/>
+                        <constraint firstItem="cmz-VG-FzX" firstAttribute="top" secondItem="tzg-bZ-Rb0" secondAttribute="top" id="M4d-We-d5F"/>
+                        <constraint firstItem="cmz-VG-FzX" firstAttribute="leading" secondItem="tzg-bZ-Rb0" secondAttribute="leading" id="MmZ-tV-RSp"/>
+                        <constraint firstItem="tzg-bZ-Rb0" firstAttribute="bottom" secondItem="cmz-VG-FzX" secondAttribute="bottom" id="Pe3-gI-wg8"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="tzg-bZ-Rb0"/>
+                    <connections>
+                        <outlet property="mapView" destination="cmz-VG-FzX" id="efz-pN-o8O"/>
+                    </connections>
+                </view>
             </objects>
             <point key="canvasLocation" x="1384.8" y="-314.39280359820094"/>
         </scene>

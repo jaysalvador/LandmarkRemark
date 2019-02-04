@@ -23,6 +23,7 @@
 		B501905D2208204500BECFA7 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501905C2208204500BECFA7 /* Note.swift */; };
 		B501905F2208277E00BECFA7 /* NoteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501905E2208277E00BECFA7 /* NoteHelper.swift */; };
 		B50190642208372C00BECFA7 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50190632208372C00BECFA7 /* NoteTableViewCell.swift */; };
+		B501906622084C6A00BECFA7 /* MapTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501906522084C6900BECFA7 /* MapTableViewHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		B501905C2208204500BECFA7 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		B501905E2208277E00BECFA7 /* NoteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHelper.swift; sourceTree = "<group>"; };
 		B50190632208372C00BECFA7 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
+		B501906522084C6900BECFA7 /* MapTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				B50190632208372C00BECFA7 /* NoteTableViewCell.swift */,
+				B501906522084C6900BECFA7 /* MapTableViewHeader.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				B50190362207B9F500BECFA7 /* ViewController.swift in Sources */,
 				B5019059220800C200BECFA7 /* LandmarkTableViewController.swift in Sources */,
 				B501905B22080EF800BECFA7 /* AddNoteViewController.swift in Sources */,
+				B501906622084C6A00BECFA7 /* MapTableViewHeader.swift in Sources */,
 				B501905F2208277E00BECFA7 /* NoteHelper.swift in Sources */,
 				B501905D2208204500BECFA7 /* Note.swift in Sources */,
 				B50190342207B9F500BECFA7 /* AppDelegate.swift in Sources */,
