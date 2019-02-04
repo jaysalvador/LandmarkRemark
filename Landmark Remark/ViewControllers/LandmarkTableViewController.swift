@@ -28,7 +28,12 @@ class LandmarkTableViewController: UITableViewController {
         }
     }
     
-    private var locationManager: CLLocationManager?
+    private var locationManager: CLLocationManager? {
+        didSet {
+            self.locationManager?.delegate = self
+            self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,18 +43,8 @@ class LandmarkTableViewController: UITableViewController {
         
         // Update user location
         self.locationManager = CLLocationManager()
-        
-        // Ask for Authorisation from the User.
         self.locationManager?.requestAlwaysAuthorization()
-        
-        // For use in foreground
         self.locationManager?.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            self.locationManager?.delegate = self
-            self.locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            self.locationManager?.startUpdatingLocation()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -86,10 +81,6 @@ class LandmarkTableViewController: UITableViewController {
 }
 
 extension LandmarkTableViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-    }
-    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
             case .authorizedWhenInUse:
@@ -228,6 +219,11 @@ extension LandmarkTableViewController: MKMapViewDelegate {
         mapView?.addAnnotations(
             notes.map { (note) -> NoteAnnotation in return NoteAnnotation.init(note) }
         )
+        
+        if(notes.count > 0){
+            let coordinate = CLLocationCoordinate2D.init(latitude: notes[0].latitude, longitude: notes[0].longitude)
+            self.centerMap(on: coordinate, radius: 10000)
+        }
     }
     
 }
