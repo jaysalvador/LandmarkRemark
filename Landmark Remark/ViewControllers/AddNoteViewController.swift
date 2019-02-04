@@ -40,7 +40,23 @@ class AddNoteViewController: UIViewController {
 
     @IBAction func saveTapped(_ sender: Any) {
         self.txtNotes.resignFirstResponder()
-        
+        self.btnSave.isEnabled = false
+
+        if let user = UserHelper.loginUser {
+            let coordinates = self.mapView.userLocation.coordinate
+            
+            let note = Note.init(user: user, notes: txtNotes.text, latitude: coordinates.latitude, longitude: coordinates.longitude)
+            
+            NoteHelper.saveNote(note: note) { (note) in
+                if note != nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                else {
+                    self.btnSave.isEnabled = true
+                }
+            }
+            
+        }
     }
     
     @IBAction func cancelTapped(_ sender: Any) {

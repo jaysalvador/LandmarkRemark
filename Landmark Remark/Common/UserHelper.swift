@@ -68,11 +68,12 @@ class UserHelper {
                 else {
                     let document = querySnapshot!.documents[0]
                     let userID = document.documentID
-                    var dic:[String : Any?] = [keyUserID : userID]
+                    var dic:[String : Any?] = [:]
                     
                     for (key, value) in document.data(){
                         dic[key] = value
                     }
+                    dic[keyUserID] = userID
                     
                     UserHelper.loginUser = User.init(dic)
                     completion(UserHelper.loginUser)
