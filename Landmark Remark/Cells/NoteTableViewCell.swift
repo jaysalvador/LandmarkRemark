@@ -26,7 +26,13 @@ class NoteTableViewCell: UITableViewCell {
         if let icon = note.user.icon {
             self.imgIcon.image = UIImage.init(named: icon)
         }
-        self.lblUser.text = note.user.username
+        
+        var time = ""
+        if let date = Note.stringToDate(dateString: note.date){
+            time = " • \(Date.init().offset(from: date))"
+        }
+        
+        self.lblUser.text = "@\(note.user.username)\(time)"
         self.lblMessage.text = note.notes
     }
     
