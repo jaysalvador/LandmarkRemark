@@ -14,11 +14,7 @@ class LandmarkTableViewController: UITableViewController {
     @IBOutlet var mapTableViewHeader: MapTableViewHeader!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    private weak var mapView: MKMapView? {
-        didSet {
-            mapView?.showsUserLocation = true
-        }
-    }
+    private weak var mapView: MKMapView?
     
     private var noteArray: [Note] = [] {
         didSet{
@@ -28,14 +24,32 @@ class LandmarkTableViewController: UITableViewController {
     private var filteredNoteArray: [Note] = [] {
         didSet {
             tableView.reloadData()
+            loadAnnotations(filteredNoteArray)
         }
     }
+    
+    private var locationManager: CLLocationManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.estimatedRowHeight = 70
         self.tableView.rowHeight = UITableView.automaticDimension
+        
+        // Update user location
+        self.locationManager = CLLocationManager()
+        
+        // Ask for Authorisation from the User.
+        self.locationManager?.requestAlwaysAuthorization()
+        
+        // For use in foreground
+        self.locationManager?.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            self.locationManager?.delegate = self
+            self.locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            self.locationManager?.startUpdatingLocation()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,6 +85,22 @@ class LandmarkTableViewController: UITableViewController {
     
 }
 
+extension LandmarkTableViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+            case .authorizedWhenInUse:
+                manager.startUpdatingLocation()
+                break
+            default:
+                break
+        }
+    }
+}
+
 extension LandmarkTableViewController {
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,7 +120,16 @@ extension LandmarkTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let note = filteredNoteArray[indexPath.row]
         
-        
+        let annotations = mapView?.annotations.filter({ (annotation) -> Bool in
+            if let noteAnnotation = annotation as? NoteAnnotation {
+                return noteAnnotation.note.noteid == note.noteid
+            }
+            return false
+        })
+        if let annotations = annotations, annotations.count > 0 {
+            mapView?.selectAnnotation(annotations[0], animated: true)
+            self.centerMap(on: annotations[0].coordinate, radius: 500)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -144,10 +183,30 @@ extension LandmarkTableViewController: UISearchBarDelegate {
 // MARK: - MKMapViewDelegate
 extension LandmarkTableViewController: MKMapViewDelegate {
     
-    public func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         centerMap(on: userLocation.coordinate)
     }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !annotation.isKind(of: MKUserLocation.self) else {
+            return nil
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: NoteAnnotation.reuseIdentifier())
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: NoteAnnotation.reuseIdentifier())
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        if let annotation = annotation as? NoteAnnotation {
+            annotationView?.image = annotation.image
+        }
+        
+        return annotationView
+    }
     
     /**
      Centers the mapview on the given coordinates with a specific radius
@@ -155,9 +214,20 @@ extension LandmarkTableViewController: MKMapViewDelegate {
      - Parameter radius: maximum radius.
      */
     
-    private func centerMap(on coordinate: CLLocationCoordinate2D, radius: CLLocationDistance = 200) {
+    private func centerMap(on coordinate: CLLocationCoordinate2D, radius: CLLocationDistance = 2000) {
         let coordinateRegion = MKCoordinateRegion.init(center: coordinate, latitudinalMeters: radius, longitudinalMeters: radius)
         
         self.mapView?.setRegion(coordinateRegion, animated: true)
     }
+    
+    private func loadAnnotations(_ notes : [Note]) {
+        if let displayedAnnotations = mapView?.annotations {
+            mapView?.removeAnnotations(displayedAnnotations)
+        }
+        
+        mapView?.addAnnotations(
+            notes.map { (note) -> NoteAnnotation in return NoteAnnotation.init(note) }
+        )
+    }
+    
 }

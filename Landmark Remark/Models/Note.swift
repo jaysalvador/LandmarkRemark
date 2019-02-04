@@ -19,8 +19,8 @@ class Note: SerializableProtocol {
     let user: User
     
     
-    init(user: User, notes: String, latitude: Double, longitude: Double, date: String){
-        self.noteid = nil
+    init(user: User, noteid: String?, notes: String, latitude: Double, longitude: Double, date: String){
+        self.noteid = noteid
         self.user = user
         self.latitude = latitude
         self.longitude = longitude
@@ -30,11 +30,12 @@ class Note: SerializableProtocol {
     
     convenience init(user: User, notes: String, latitude: Double, longitude: Double){
         
-        self.init(user: user, notes: notes, latitude: latitude, longitude: longitude, date: Note.dateToString(date: Date()))
+        self.init(user: user, noteid: nil, notes: notes, latitude: latitude, longitude: longitude, date: Note.dateToString(date: Date()))
     }
     
     convenience init(_ dictionary: [String : Any?]){
         self.init(user: User.init(dictionary["user"] as! [String : Any?]),
+                  noteid: dictionary["noteid"] as? String,
                   notes: dictionary["notes"] as! String,
                   latitude: dictionary["latitude"] as! Double,
                   longitude: dictionary["longitude"] as! Double,

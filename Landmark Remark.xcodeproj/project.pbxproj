@@ -24,6 +24,7 @@
 		B501905F2208277E00BECFA7 /* NoteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501905E2208277E00BECFA7 /* NoteHelper.swift */; };
 		B50190642208372C00BECFA7 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50190632208372C00BECFA7 /* NoteTableViewCell.swift */; };
 		B501906622084C6A00BECFA7 /* MapTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501906522084C6900BECFA7 /* MapTableViewHeader.swift */; };
+		B550D5AE2208592B007FC141 /* NoteAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550D5AD2208592B007FC141 /* NoteAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		B501905E2208277E00BECFA7 /* NoteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHelper.swift; sourceTree = "<group>"; };
 		B50190632208372C00BECFA7 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		B501906522084C6900BECFA7 /* MapTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewHeader.swift; sourceTree = "<group>"; };
+		B550D5AD2208592B007FC141 /* NoteAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				B50190522207E73000BECFA7 /* Serializable.swift */,
 				B50190562207ED0F00BECFA7 /* UserHelper.swift */,
 				B501905E2208277E00BECFA7 /* NoteHelper.swift */,
+				B550D5AD2208592B007FC141 /* NoteAnnotation.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				B50190342207B9F500BECFA7 /* AppDelegate.swift in Sources */,
 				B501904C2207CFE100BECFA7 /* LoginTableViewController.swift in Sources */,
 				B50190572207ED0F00BECFA7 /* UserHelper.swift in Sources */,
+				B550D5AE2208592B007FC141 /* NoteAnnotation.swift in Sources */,
 				B50190642208372C00BECFA7 /* NoteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,6 +465,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L4LQQG9QN4;
 				INFOPLIST_FILE = "Landmark Remark/General/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -479,6 +484,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L4LQQG9QN4;
 				INFOPLIST_FILE = "Landmark Remark/General/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
