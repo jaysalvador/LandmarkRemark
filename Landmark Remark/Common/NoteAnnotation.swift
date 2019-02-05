@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 
+/// Custom Annotations for Notes
 class NoteAnnotation: MKPointAnnotation {
 
     var note: Note!

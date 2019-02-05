@@ -8,8 +8,11 @@
 
 import UIKit
 
+// MARK: - UIViewController extension for gestures and notifications
+
 extension UIViewController {
-    
+
+    /// adds a dismiss keyboard gesture for  UIViewControllers
     func addGestureHideKeyboard()
     {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -20,6 +23,10 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
     
+    
+    /// Adds a Keyboard Notification observer for the UIViewController
+    ///
+    /// - Parameter selector: function that listens to the notification
     func addKeyboardNotification (selector: Selector) {
         NotificationCenter.default.addObserver(
             self,
@@ -29,11 +36,16 @@ extension UIViewController {
         )
     }
     
+    
+    /// hides the keyboard from view
     @objc func dismissKeyboard()
     {
         view.endEditing(true)
     }
 }
+
+
+// MARK: - Date object extensions for the time display label
 
 extension Date {
     /// Returns the amount of years from another date

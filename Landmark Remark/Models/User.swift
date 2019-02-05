@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// Model class for User, implementing SerializableProtocol that contains a object to dictionary serializer
+
 class User: SerializableProtocol {
     
     let userid: String

@@ -9,10 +9,18 @@
 import Foundation
 import Firebase
 
+
+/// Database helper functions for Note Model
 class NoteHelper {
     
     private static let keyNotes = "notes"
     
+    
+    /// Saves the note created.
+    ///
+    /// - Parameters:
+    ///   - note: Note object created
+    ///   - completion: Note object from database
     static func saveNote(note: Note, completion: @escaping (_ note: Note?) -> Void){
         
         var ref: DocumentReference? = nil
@@ -37,6 +45,10 @@ class NoteHelper {
         }
     }
     
+    
+    /// Retrieves the list of notes from Firestore
+    ///
+    /// - Parameter completion: contains the array of notes retrieved
     static func getNotes(completion: @escaping ((_ notes: [Note]?) -> Void)) {
         let db = Firestore.firestore()
         

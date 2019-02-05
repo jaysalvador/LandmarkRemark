@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 
+/// Database helper functions for User Model
 class UserHelper {
     
     private static let keyLoginUser = "loginUser"
@@ -16,6 +17,7 @@ class UserHelper {
     private static let keyUserID = "userid"
     private static let keyUsername = "username"
     
+    /// persistent login User object. Holds the active user in UserDefaults
     static var loginUser:User? {
         get {
             if let loginUser = UserDefaults.standard.value(forKey: keyLoginUser) as? [String: Any] {
@@ -31,6 +33,12 @@ class UserHelper {
         }
     }
     
+    /// Login function that validates the username in Firestore
+    ///
+    /// Creates a new user if the username does not exist in the users document store, otherwise, retrieves the existing user object from the store
+    /// - Parameters:
+    ///   - user: created user from login
+    ///   - completion: user object from Firestore
     static func login(_ user: User, completion: @escaping (_ user: User?) -> Void){
         let db = Firestore.firestore()
         let username = user.username
@@ -83,6 +91,8 @@ class UserHelper {
         }
     }
     
+    
+    /// logout - clears the persistent user from User Defaults
     static func logout(){
         UserDefaults.standard.removeObject(forKey: keyLoginUser)
     }

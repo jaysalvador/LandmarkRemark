@@ -9,19 +9,32 @@
 import UIKit
 import MapKit
 
+
+/**
+ LandmarkTableViewController - responsible for listing all the saved notes of all users, with available search/filtering features
+ */
 class LandmarkTableViewController: UITableViewController {
     
+    /// Custom tableview header containing the maps
     @IBOutlet var mapTableViewHeader: MapTableViewHeader!
+    
+    /// search bar for filtering
     @IBOutlet weak var searchBar: UISearchBar!
+    
+    /// user button toggle for filtering notes by the login user
     @IBOutlet weak var btnUser: UIButton!
     
+    /// mapview of the viewcontroller
     private weak var mapView: MKMapView?
     
+    /// the full notes array
     private var noteArray: [Note] = [] {
         didSet{
             filterNotes()
         }
     }
+    
+    /// subset of noteArray, contains the filtered notes set
     private var filteredNoteArray: [Note] = [] {
         didSet {
             tableView.reloadData()
@@ -29,6 +42,7 @@ class LandmarkTableViewController: UITableViewController {
         }
     }
     
+    /// location manager object
     private var locationManager: CLLocationManager? {
         didSet {
             self.locationManager?.delegate = self
@@ -36,8 +50,17 @@ class LandmarkTableViewController: UITableViewController {
         }
     }
     
+    /// user specific notes filter toggle
     private var isFilteredByUser : Bool?
     
+    
+    /**
+     Setup of the View Controller
+     Configures the following:
+     - location manager settings
+     - UIRefreshControl
+     - dynamic tableviewcell resize
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,11 +82,19 @@ class LandmarkTableViewController: UITableViewController {
         self.btnUser.setImage(UIImage(named: "\(UserHelper.loginUser?.icon ?? "bird0")"), for: .normal)
     }
     
+    /**
+     load the notes array
+     */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.loadNotes()
     }
     
+    /**
+     fetches the full notes array from Firestore database
+     
+     resets the filter for user specific notes
+     */
     @objc func loadNotes () {
         self.isFilteredByUser = false
         // Load Notes
@@ -75,6 +106,10 @@ class LandmarkTableViewController: UITableViewController {
         }
     }
     
+    /**
+     Log-out the current user out of persistence and session, clears the User Defaults, shows back the login screen
+     - Parameter sender: logout button
+     */
     @IBAction func logoutTapped(_ sender: Any) {
         let alert = UIAlertController.init(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         
@@ -82,24 +117,27 @@ class LandmarkTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { [weak self] (UIAlertAction) in
             UserHelper.logout()
             
-            if let strongSelf = self {
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginTableViewController") as? LoginTableViewController
-                {
-                    
+            if let strongSelf = self, let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginTableViewController") as? LoginTableViewController {
                     let navController = UINavigationController(rootViewController: vc)
                     strongSelf.present(navController, animated: true, completion: nil)
-                }
             }
         }))
         
         self.present(alert, animated: true, completion: nil)
     }
     
+    /**
+     Toggles user specific notes filter
+     - Parameter sender: user avatar button
+     */
     @IBAction func btnUserTapped(_ sender: Any) {
         self.isFilteredByUser = !self.isFilteredByUser!
         self.filterNotes(self.isFilteredByUser!)
     }
 }
+
+
+// MARK: - CLLocationManagerDelegate
 
 extension LandmarkTableViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -113,7 +151,10 @@ extension LandmarkTableViewController: CLLocationManagerDelegate {
     }
 }
 
+// MARK: - UITableViewController datasource/delegates extension
+
 extension LandmarkTableViewController {
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredNoteArray.count
@@ -161,6 +202,9 @@ extension LandmarkTableViewController {
     
     // MARK: - Actions
     
+    /// Filter function for notes, filters the array using the search bar text, compared with the username and notes text
+    /// ordered by notes posted date
+    /// - Parameter isFilteredByUser: toggle to filter notes by login user
     private func filterNotes (_ isFilteredByUser: Bool = false) {
         var filteredArray : [Note] = []
         if let text = searchBar.text, !text.isEmpty{
@@ -190,6 +234,7 @@ extension LandmarkTableViewController {
     }
 }
 
+// MARK: - UISearchBarDelegate
 extension LandmarkTableViewController: UISearchBarDelegate {
     
     // MARK: - Searchbar
@@ -202,7 +247,7 @@ extension LandmarkTableViewController: UISearchBarDelegate {
     }
 }
 
-// MARK: - MKMapViewDelegate
+// MARK: - <#MKMapViewDelegate#>
 extension LandmarkTableViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -242,6 +287,10 @@ extension LandmarkTableViewController: MKMapViewDelegate {
         self.mapView?.setRegion(coordinateRegion, animated: true)
     }
     
+    
+    /// loads annotations on the map after filteredNoteArray has been populated
+    ///
+    /// - Parameter notes: Array of Note
     private func loadAnnotations(_ notes : [Note]) {
         if let displayedAnnotations = mapView?.annotations {
             mapView?.removeAnnotations(displayedAnnotations)

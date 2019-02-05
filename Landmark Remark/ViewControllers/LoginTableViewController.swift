@@ -8,6 +8,8 @@
 
 import UIKit
 
+/// LoginTableViewController class - responsible for user login and login persistence
+
 class LoginTableViewController: UITableViewController {
 
     @IBOutlet weak var btnBird: UIButton!
@@ -27,6 +29,9 @@ class LoginTableViewController: UITableViewController {
     }
 
     
+    /**
+     radomizes selection of bird avatar
+     */
     private func randomizeBird(){
         let birdCount: UInt32 = 10
         self.selectedIcon = Int(arc4random_uniform(birdCount))
@@ -34,6 +39,9 @@ class LoginTableViewController: UITableViewController {
         btnBird.setImage(UIImage.init(named: "bird\(self.selectedIcon)"), for: .normal)
     }
     
+    /**
+     validates username textfield and creates/fetches a user for login
+     */
     private func checkUsername (){
         if let username = txtUserName.text, !username.isEmpty {
             let user:User = User.init(userid: "", username: username, icon: "bird\(self.selectedIcon)")
@@ -46,6 +54,10 @@ class LoginTableViewController: UITableViewController {
         }
     }
     
+    /**
+     Presents LandmarkTableViewController when login is successful
+     - Parameter animated: animates UIViewController presentation
+     */
     private func presentViewController (_ animated : Bool = false){
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LandmarkTableViewController") as? LandmarkTableViewController
         {
@@ -54,6 +66,10 @@ class LoginTableViewController: UITableViewController {
         }
     }
     
+    /**
+     Login button tapped
+     - Parameter sender: UIButton sender
+     */
     @IBAction func loginTapped(_ sender: Any) {
         // Login
         // Add User to Cloud Firestore
@@ -61,13 +77,20 @@ class LoginTableViewController: UITableViewController {
         checkUsername()
     }
     
+    /**
+     Bird avatar button tapped
+     - Parameter sender: UIButton sender
+     */
     @IBAction func btnBirdTapped(_ sender: Any) {
         randomizeBird()
     }
 }
 
+
+// MARK: - <#UITextFieldDelegate#>
+
 extension LoginTableViewController: UITextFieldDelegate {
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         guard string.range(of: "[^a-zA-Z0-9_\n]", options: .regularExpression) == nil  else {
@@ -80,7 +103,7 @@ extension LoginTableViewController: UITextFieldDelegate {
             checkUsername()
         }
         else {
-            // enable or disable login
+            // enable or disable login is the username has a text value
             let newText = (textField.text! as NSString).replacingCharacters(in: range, with: string)
             let numberOfChars = newText.count
             self.btnLogin.isEnabled = numberOfChars > 0
