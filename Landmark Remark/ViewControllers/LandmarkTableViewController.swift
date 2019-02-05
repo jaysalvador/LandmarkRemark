@@ -13,6 +13,7 @@ class LandmarkTableViewController: UITableViewController {
     
     @IBOutlet var mapTableViewHeader: MapTableViewHeader!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var btnUser: UIButton!
     
     private weak var mapView: MKMapView?
     
@@ -35,8 +36,12 @@ class LandmarkTableViewController: UITableViewController {
         }
     }
     
+    private var isFilteredByUser : Bool?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.isFilteredByUser = false
         
         self.addGestureHideKeyboard()
         
@@ -50,6 +55,8 @@ class LandmarkTableViewController: UITableViewController {
 
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(loadNotes), for: .valueChanged)
+        
+        self.btnUser.setImage(UIImage(named: "\(UserHelper.loginUser?.icon ?? "bird0")"), for: .normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,6 +65,7 @@ class LandmarkTableViewController: UITableViewController {
     }
     
     @objc func loadNotes () {
+        self.isFilteredByUser = false
         // Load Notes
         NoteHelper.getNotes { [weak self] (noteArray) in
             if let strongSelf = self, let noteArray = noteArray {
@@ -87,6 +95,10 @@ class LandmarkTableViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func btnUserTapped(_ sender: Any) {
+        self.isFilteredByUser = !self.isFilteredByUser!
+        self.filterNotes(self.isFilteredByUser!)
+    }
 }
 
 extension LandmarkTableViewController: CLLocationManagerDelegate {
@@ -149,9 +161,10 @@ extension LandmarkTableViewController {
     
     // MARK: - Actions
     
-    private func filterNotes () {
+    private func filterNotes (_ isFilteredByUser: Bool = false) {
+        var filteredArray : [Note] = []
         if let text = searchBar.text, !text.isEmpty{
-            self.filteredNoteArray = noteArray.filter { (note) -> Bool in
+            filteredArray = noteArray.filter { (note) -> Bool in
                 let username = note.user.username.lowercased()
                 let message = note.notes.lowercased()
                 let lowercaseSearchText = text.lowercased()
@@ -163,8 +176,17 @@ extension LandmarkTableViewController {
                 }.sorted { $0.date > $1.date }
         }
         else {
-            self.filteredNoteArray = noteArray.sorted { $0.date > $1.date }
+            filteredArray = noteArray.sorted { $0.date > $1.date }
         }
+        
+        self.filteredNoteArray = filteredArray.filter({ (note) -> Bool in
+            if isFilteredByUser {
+                return UserHelper.loginUser?.userid == note.user.userid
+            }
+            else {
+                return true
+            }
+        })
     }
 }
 
@@ -172,7 +194,7 @@ extension LandmarkTableViewController: UISearchBarDelegate {
     
     // MARK: - Searchbar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterNotes()
+        filterNotes(self.isFilteredByUser!)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

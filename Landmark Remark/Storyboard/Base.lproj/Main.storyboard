@@ -108,7 +108,7 @@
             </objects>
             <point key="canvasLocation" x="-596" y="-314"/>
         </scene>
-        <!--Landmark Table View Controller-->
+        <!--Landmark Remark-->
         <scene sceneID="Epb-rW-vkH">
             <objects>
                 <tableViewController storyboardIdentifier="LandmarkTableViewController" id="Z3G-dn-Tj2" customClass="LandmarkTableViewController" customModule="Landmark_Remark" customModuleProvider="target" sceneMemberID="viewController">
@@ -116,17 +116,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" placeholder="Search users and notes" id="uWm-qQ-bbA">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="s7r-aH-yZv">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search users and notes" translatesAutoresizingMaskIntoConstraints="NO" id="uWm-qQ-bbA">
+                                    <rect key="frame" x="0.0" y="0.0" width="337" height="56"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="Z3G-dn-Tj2" id="H5a-Ny-noS"/>
+                                    </connections>
+                                </searchBar>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Zs-9a-jrL">
+                                    <rect key="frame" x="337" y="13" width="30" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="OqX-KX-hky"/>
+                                        <constraint firstAttribute="width" secondItem="4Zs-9a-jrL" secondAttribute="height" multiplier="1:1" id="qVR-uo-p54"/>
+                                    </constraints>
+                                    <state key="normal" title="Button" image="bird0"/>
+                                    <connections>
+                                        <action selector="btnUserTapped:" destination="Z3G-dn-Tj2" eventType="touchUpInside" id="AQU-p5-NHq"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="56" id="D6U-LU-QlF"/>
+                                <constraint firstAttribute="bottom" secondItem="uWm-qQ-bbA" secondAttribute="bottom" id="5ZG-d9-oRX"/>
+                                <constraint firstItem="4Zs-9a-jrL" firstAttribute="leading" secondItem="uWm-qQ-bbA" secondAttribute="trailing" id="UwD-Ah-exU"/>
+                                <constraint firstItem="uWm-qQ-bbA" firstAttribute="leading" secondItem="s7r-aH-yZv" secondAttribute="leading" id="VTZ-aN-bLW"/>
+                                <constraint firstAttribute="trailing" secondItem="4Zs-9a-jrL" secondAttribute="trailing" constant="8" id="aW1-jL-wef"/>
+                                <constraint firstItem="4Zs-9a-jrL" firstAttribute="top" secondItem="s7r-aH-yZv" secondAttribute="top" constant="13" id="iUS-7p-gHG"/>
+                                <constraint firstAttribute="bottom" secondItem="4Zs-9a-jrL" secondAttribute="bottom" constant="13" id="uSL-6c-MSs"/>
+                                <constraint firstItem="uWm-qQ-bbA" firstAttribute="top" secondItem="s7r-aH-yZv" secondAttribute="top" id="ua5-dJ-04R"/>
                             </constraints>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="Z3G-dn-Tj2" id="H5a-Ny-noS"/>
-                            </connections>
-                        </searchBar>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteTableViewCell" rowHeight="70" id="QfI-C5-XMA" customClass="NoteTableViewCell" customModule="Landmark_Remark" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="84" width="375" height="70"/>
@@ -179,7 +202,7 @@
                             <outlet property="delegate" destination="Z3G-dn-Tj2" id="sNp-AC-0Y3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="vVR-fl-kzD">
+                    <navigationItem key="navigationItem" title="Landmark Remark" id="vVR-fl-kzD">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="e4I-QY-Vqp">
                             <connections>
                                 <action selector="logoutTapped:" destination="Z3G-dn-Tj2" id="9Yg-2y-oHK"/>
@@ -193,6 +216,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="btnUser" destination="4Zs-9a-jrL" id="6bg-IK-KPO"/>
                         <outlet property="mapTableViewHeader" destination="SRb-qQ-Jzb" id="pKY-i8-207"/>
                         <outlet property="searchBar" destination="uWm-qQ-bbA" id="bfM-iI-2Rc"/>
                     </connections>
