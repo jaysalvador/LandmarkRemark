@@ -47,7 +47,9 @@ The app UI has three parts:
 
 ## Effort
 
-1. ( 1 hour ) Conceptualisation of UI, Models
+13 hours, as extra time was spent on adding minor features and one hour on analyiss and conceptualisation
+
+1. ( 1 hour ) Analysis and conceptualisation of UI, Models, Classes, Views
 2. ( 2 hours ) Login Screen
     - creation of User model, User persistence, and User database helpers
 3. ( 3 hours ) Add Note
