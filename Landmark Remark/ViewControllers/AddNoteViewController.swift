@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 
+/// AddNoteViewController - controller class for creating new Notes
+
 class AddNoteViewController: UIViewController {
 
     @IBOutlet weak var imgIcon: UIImageView!
@@ -36,9 +38,12 @@ class AddNoteViewController: UIViewController {
         super.viewDidAppear(animated)
         
         mapView.showsUserLocation = true
-        
     }
 
+    /**
+     Saves a new note to the notes JSON document in Firestore
+     - Parameter sender: Save button
+     */
     @IBAction func saveTapped(_ sender: Any) {
         self.txtNotes.resignFirstResponder()
         self.btnSave.isEnabled = false
@@ -60,6 +65,11 @@ class AddNoteViewController: UIViewController {
         }
     }
     
+    /**
+     Closes the UIViewController
+     - Parameter sender: cancel button
+     */
+    
     @IBAction func cancelTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -68,6 +78,8 @@ class AddNoteViewController: UIViewController {
 // MARK: - MKMapViewDelegate
 
 extension AddNoteViewController: MKMapViewDelegate {
+    
+    /// gets the User Location to be updated on the map
     public func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         centerMap(on: userLocation.coordinate)
         
@@ -111,6 +123,8 @@ extension AddNoteViewController: UITextViewDelegate {
     
     // MARK: - Protocols
     
+    /// disables new line and updates the save button based on the UITextView value
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         // escape when character is a new line
@@ -128,6 +142,10 @@ extension AddNoteViewController: UITextViewDelegate {
         return true
     }
     
+    /**
+     Updates the UITextView for the default placeholder
+     - Parameter textView: UIButton sender
+     */
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
@@ -135,6 +153,10 @@ extension AddNoteViewController: UITextViewDelegate {
         }
     }
     
+    /**
+     Updates the UITextView for the default placeholder
+     - Parameter textView: UIButton sender
+     */
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = AddNoteViewController.placeholder
@@ -144,11 +166,19 @@ extension AddNoteViewController: UITextViewDelegate {
     
     // MARK: - Actions
     
+    /**
+     Sets up the UITextView for the default placeholder
+     - Parameter textView: UIButton sender
+     */
     func setupKeyboard(_ textView: UITextView){
         textView.text = AddNoteViewController.placeholder
         textView.textColor = UIColor.lightGray
     }
     
+    /**
+     Adjusts the UITextView's inset bounds above the keyboard so the text not overlapped
+     - Parameter notification: notification sender
+     */
     @objc func keyboardWillShow(_ notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue

@@ -8,6 +8,8 @@
 
 import UIKit
 
+/// NoteTableViewCell - custom cell configuration for the notes
+
 class NoteTableViewCell: UITableViewCell {
 
     @IBOutlet weak var imgIcon: UIImageView!
@@ -22,6 +24,9 @@ class NoteTableViewCell: UITableViewCell {
         }
     }
     
+    /// Convenience function to set the cell objects using a Note object
+    ///
+    /// - Parameter note: Note object
     private func setNoteView(note: Note){
         if let icon = note.user.icon {
             self.imgIcon.image = UIImage.init(named: icon)
@@ -36,6 +41,10 @@ class NoteTableViewCell: UITableViewCell {
         self.lblMessage.text = note.notes
     }
     
+    
+    /// Convenience function to define the reusable identifier
+    ///
+    /// - Returns: reusable identifier
     static func cellIdentifier() -> String {
         return "NoteTableViewCell"
     }

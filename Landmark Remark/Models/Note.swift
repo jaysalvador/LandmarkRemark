@@ -9,6 +9,8 @@
 import Foundation
 import MapKit
 
+/// Model class for Note, implementing SerializableProtocol that contains a object to dictionary serializer
+
 class Note: SerializableProtocol {
     
     let noteid: String?
@@ -43,8 +45,14 @@ class Note: SerializableProtocol {
     }
 }
 
+
+// MARK: - Date formatting extensions
+
 extension Note {
     
+    /// Preconfigured Date formatter for JSON string
+    ///
+    /// - Returns: date formatter instance
     private static func dateFormatter() -> DateFormatter {
         let dateFormatter = DateFormatter()
         let enUSPosixLocale = Locale(identifier: "en_US_POSIX")
@@ -55,10 +63,20 @@ extension Note {
         return dateFormatter
     }
     
+    
+    /// Converts a date instance to string based on the defined dateformatter in this extension
+    ///
+    /// - Parameter date: date to format
+    /// - Returns: string value representation
     static func dateToString(date: Date) -> String{
         return Note.dateFormatter().string(from: date)
     }
     
+    
+    /// Converts a string date to a date instance, based on the dateformatter defined in this extension
+    ///
+    /// - Parameter dateString: string representation of the date
+    /// - Returns: date object, or nil if the string does not conform to the format
     static func stringToDate(dateString: String) -> Date? {
         return Note.dateFormatter().date(from: dateString)
     }
